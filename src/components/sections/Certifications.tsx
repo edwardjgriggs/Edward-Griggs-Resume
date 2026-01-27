@@ -20,6 +20,7 @@ const certifications: Certification[] = [
     date: 'January 2026',
     description:
       'Industry-leading certification validating baseline cybersecurity skills, including network security, compliance, operational security, and threat management.',
+    verifyUrl: 'https://www.credly.com/badges/3b9d7d06-964d-40c1-bc37-2bba68a05336/public_url',
   },
 ]
 

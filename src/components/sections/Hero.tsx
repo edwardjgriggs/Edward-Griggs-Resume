@@ -1,10 +1,14 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Download, Mail, MapPin, Briefcase } from 'lucide-react'
+import Image from 'next/image'
 import { Button } from '../ui'
 
 export function Hero() {
+  const [imageError, setImageError] = useState(false)
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
@@ -46,6 +50,40 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Profile Photo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-6"
+        >
+          <div className="relative inline-block">
+            {/* Glow effect behind photo */}
+            <div className="absolute inset-0 rounded-full bg-accent-500/20 blur-xl scale-110" />
+
+            {/* Photo container with border */}
+            <div className="relative w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-accent-500/40 shadow-glow-sm">
+              {!imageError ? (
+                <Image
+                  src="/profile.jpg"
+                  alt="Edward Griggs headshot"
+                  fill
+                  className="object-cover"
+                  priority
+                  onError={() => setImageError(true)}
+                />
+              ) : (
+                /* Fallback: Initials placeholder */
+                <div className="w-full h-full bg-navy-800 flex items-center justify-center">
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-accent-400 font-mono">
+                    EG
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        </motion.div>
+
         {/* Now pill */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -128,21 +166,6 @@ export function Hero() {
           </Button>
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-6 h-10 rounded-full border-2 border-navy-600 flex items-start justify-center p-1.5"
-          >
-            <motion.div className="w-1.5 h-3 rounded-full bg-accent-500" />
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   )
